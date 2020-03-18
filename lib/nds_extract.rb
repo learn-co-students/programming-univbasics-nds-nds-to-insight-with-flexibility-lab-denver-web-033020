@@ -34,48 +34,47 @@ end
 # Your code after this point
 
 def movies_with_director_key(name, movies_collection)
-  # GOAL: For each Hash in an Array (movies_collection), provide a collection
-  # of movies and a directors name to the movie_with_director_name method
-  # and accumulate the returned Array of movies into a new Array that's
-  # returned by this method.
-  #
-  # INPUT:
-  # * name: A director's name
-  # * movies_collection: An Array of Hashes where each Hash represents a movie
-  #
-  # RETURN:
-  #
-  # Array of Hashes where each Hash represents a movie; however, they should all have a
-  # :director_name key. This addition can be done by using the provided
-  # movie_with_director_name method
+  index = 0
+  array_of_movies = []
+  while index < movies_collection.length do
+    movie_info = movie_with_director_name(name, movies_collection[index])
+    array_of_movies << movie_info
+    index += 1
+  end
+  
+  return array_of_movies
+ 
 end
 
 
 def gross_per_studio(collection)
-  # GOAL: Given an Array of Hashes where each Hash represents a movie,
-  # return a Hash that includes the total worldwide_gross of all the movies from
-  # each studio.
-  #
-  # INPUT:
-  # * collection: Array of Hashes where each Hash where each Hash represents a movie
-  #
-  # RETURN:
-  #
-  # Hash whose keys are the studio names and whose values are the sum
-  # total of all the worldwide_gross numbers for every movie in the input Hash
+  index = 0
+  studio_money = {}
+  while index < collection.length do
+    studio_name = collection[index][:studio]  
+    movie_money = collection[index][:worldwide_gross]
+    if !studio_money[studio_name]
+      studio_money[studio_name] = movie_money
+    else
+      studio_money[studio_name] += movie_money
+    end
+    index += 1
+  end
+  
+  studio_money
+  
 end
 
 def movies_with_directors_set(source)
-  # GOAL: For each director, find their :movies Array and stick it in a new Array
-  #
-  # INPUT:
-  # * source: An Array of Hashes containing director information including
-  # :name and :movies
-  #
-  # RETURN:
-  #
-  # Array of Arrays containing all of a director's movies. Each movie will need
-  # to have a :director_name key added to it.
+  index = 0
+  array_of_directors = []
+  while index < source.length do
+    director_name = source[index][:name]
+    movies_collection = source[index][:movies]
+    array_of_directors << movies_with_director_key(director_name, movies_collection)
+    index += 1
+  end
+  return array_of_directors
 end
 
 # ----------------    End of Your Code Region --------------------
